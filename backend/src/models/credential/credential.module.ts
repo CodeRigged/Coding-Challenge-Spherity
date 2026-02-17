@@ -11,7 +11,7 @@ import { CredentialService } from "./credential.service.js"
   imports: [
     MongooseModule.forFeature([{ name: Credential.name, schema: CredentialSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || "hard!to-guess_secret",
+      secret: process.env.JWT_SECRET!,
       signOptions: { expiresIn: "1y" },
     }),
   ],
