@@ -7,8 +7,8 @@
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-perfectionist": "5.5.0",
-    "rimraf": "^6.1.2",
-    "wait-on": "^9.0.3",
+    "rimraf": "6.1.2",
+    "wait-on": "9.0.3",
     "typescript-eslint": "8.55.0"
   },
   "engines": {
