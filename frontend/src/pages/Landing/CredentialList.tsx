@@ -1,27 +1,27 @@
 import { Box, CircularProgress, Typography } from "@mui/material"
 import { useEffect } from "react"
 
+import { useCredentialStore } from "~/stores/credential-store"
 import { useErrorStore } from "~/stores/state-handlers"
-import { useTodoStore } from "~/stores/todo-store"
 
-import TodoForm from "./TodoForm"
-import TodoItems from "./TodoItems"
+import CredentialForm from "./CredentialForm"
+import CredentialItems from "./CredentialItems"
 
-const TodoList = () => {
-  const { fetchTodos, isPending, text: pendingMessage } = useTodoStore()
+const CredentialList = () => {
+  const { fetchCredentials, isPending, text: pendingMessage } = useCredentialStore()
   const { setError } = useErrorStore()
 
   useEffect(() => {
-    fetchTodos().catch(setError)
+    fetchCredentials().catch(setError)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <Box maxWidth={480} mx="auto" mt={4}>
+    <Box maxWidth={640} mx="auto" mt={4}>
       <Typography variant="h4" gutterBottom align="center">
-        Todo List
+        Issued Credentials
       </Typography>
-      <TodoForm />
+      <CredentialForm />
       {isPending && (
         <Box display="flex" justifyContent="center" my={2}>
           <CircularProgress size={32} />
@@ -32,9 +32,9 @@ const TodoList = () => {
           )}
         </Box>
       )}
-      <TodoItems />
+      <CredentialItems />
     </Box>
   )
 }
 
-export default TodoList
+export default CredentialList
