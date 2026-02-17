@@ -5,7 +5,7 @@ This is the backend package of a fullstack monorepo managed with [pnpm workspace
 ## Features
 
 - Built with [NestJS](https://nestjs.com/) for scalable, modular architecture
-- RESTful API for Todos
+- RESTful API for Credentials
 - MongoDB integration with [mongoose](https://mongoosejs.com/)
 - TypeScript-first development
 - Shares types and logic with other packages in the monorepo
@@ -13,7 +13,7 @@ This is the backend package of a fullstack monorepo managed with [pnpm workspace
 ## Prerequisites
 
 - **Node.js** (see root package.json for required version)
-- **MongoDB**: You must have a running MongoDB instance (default: mongodb://localhost:27017/todos). You can use a local install or Docker:
+- **MongoDB**: You must have a running MongoDB instance (default: mongodb://localhost:27017/credential_db). You can use a local install or Docker:
   - Local: [Install MongoDB Community Edition](https://www.mongodb.com/try/download/community)
   - Docker: `docker run -d -p 27017:27017 --name mongo mongo`
 
@@ -38,31 +38,36 @@ pnpm --filter nestjs-template start
 - `src/` – Application source code
   - `app.module.ts` – Main NestJS application module
   - `main.ts` – Application entry point
-  - `models/todo/` – Todo module, controller, service, schema
+  - `models/credential/` – Credential module, controller, service, schema
   - `base/` – Health check module
 - `package.json` – Project metadata and scripts
 
 ## API Endpoints
 
-- `GET /todos` – List all todos
-- `POST /todos` – Add a new todo (body: `{ text: string }`)
-- `PATCH /todos/:id` – Edit a todo's text (body: `{ text: string }`)
-- `DELETE /todos/:id` – Delete a todo by ID
-- `GET /health` – Health check endpoint (returns 200 if DB is connected)
+### Credential Endpoints
 
-Example todo object:
+- `POST /credentials/issue` – Issue a new credential (body: `{ type, issuer, subject, claims }`)
+- `GET /credentials` – List all credentials in the wallet
+- `GET /credentials/:id` – Fetch a credential by ID
+- `POST /credentials/verify` – Verify a credential JWT (body: `{ jwt }`)
+- `DELETE /credentials/:id` – Delete a credential by ID
+
+Example credential object:
 
 ```json
 {
   "_id": "...",
-  "text": "Buy milk",
-  "completed": false
+  "type": "TestCredential",
+  "issuer": "did:example:issuer",
+  "subject": "did:example:subject",
+  "claims": { "name": "Alice" },
+  "jwt": "..."
 }
 ```
 
 ## Testing
 
-This backend supports automated testing using [Vitest](https://vitest.dev/) and [Supertest](https://www.npmjs.com/package/supertest) for HTTP endpoint testing. Example tests can be found in `src/models/todo/todo.controller.test.ts`.
+This backend supports automated testing using [Vitest](https://vitest.dev/) and [Supertest](https://www.npmjs.com/package/supertest) for HTTP endpoint testing. Example tests can be found in `src/models/credential/credential.controller.test.ts`.
 
 To run the tests:
 

@@ -4,6 +4,7 @@ This is the frontend package of a fullstack monorepo managed with [pnpm workspac
 
 ## Features
 
+- Credential dashboard: issue, view, verify, share, and delete credentials
 - Built-in internationalization (English, German, French)
 - Settings page with language and theme (dark/light) switch
 - State management via [zustand](https://github.com/pmndrs/zustand)
@@ -36,7 +37,8 @@ pnpm --filter react-ts-template lint
 ## Notes
 
 - The frontend expects the backend API to be running on http://localhost:5000 for development.
-- Shared types and enums are imported from the `shared` package (see monorepo root).
+- Shared types and enums (including credentials) are imported from the `shared` package (see monorepo root).
+- The dashboard interacts with the `/credentials` API for all credential management features.
 
 ## Testing
 

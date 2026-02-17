@@ -23,8 +23,8 @@ npm install -g pnpm
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/CodeRigged/fullstack-app-template.git
-   cd ./fullstack-app-template
+   git clone https://github.com/CodeRigged/Coding-Challenge-Spherity.git
+   cd ./Coding-Challenge-Spherity
    ```
 
 2. **Install dependencies for all packages:**
