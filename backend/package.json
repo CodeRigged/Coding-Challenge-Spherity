@@ -3,6 +3,7 @@
   "dependencies": {
     "@nestjs/common": "^11.1.13",
     "@nestjs/core": "^11.1.13",
+    "@nestjs/jwt": "^11.0.2",
     "@nestjs/mongoose": "^11.0.4",
     "@nestjs/platform-express": "^11.1.13",
     "@nestjs/terminus": "^11.0.0",
@@ -15,7 +16,8 @@
     "nestjs-pino": "^4.5.0",
     "pino": "^10.3.1",
     "pino-http": "^11.0.0",
-    "shared": "workspace:*"
+    "shared": "workspace:*",
+    "uuid": "^13.0.0"
   },
   "description": "A simple todo list REST API",
   "devDependencies": {
