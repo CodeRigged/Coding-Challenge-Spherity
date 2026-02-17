@@ -8,8 +8,8 @@
     "fr-FR": "Französisch"
   },
   "pages": {
-    "landing": {
-      "title": "Startseite"
+    "dashboard": {
+      "title": "Dashboard"
     },
     "logout": {
       "title": "Abmelden"
