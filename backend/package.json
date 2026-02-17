@@ -19,7 +19,7 @@
     "shared": "workspace:*",
     "uuid": "^13.0.0"
   },
-  "description": "A simple todo list REST API",
+  "description": "A simple credential REST API",
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",

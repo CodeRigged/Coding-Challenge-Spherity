@@ -101,7 +101,7 @@ docker-compose down
 
 - Make sure you are using the correct Node.js and pnpm versions.
 - If you encounter issues, try running `pnpm install` again.
-- If the backend fails to connect to MongoDB, ensure MongoDB is running locally (default: mongodb://localhost:27017/todos) or update the `MONGO_URI` environment variable in the backend.
+- If the backend fails to connect to MongoDB, ensure MongoDB is running locally (default: mongodb://localhost:27017/credential_db) or update the `MONGO_URI` environment variable in the backend.
 
 ## License
 

@@ -16,7 +16,7 @@ dotenv.config()
 @Module({
   imports: [
     LoggerModule.forRoot(loggerOptions),
-    MongooseModule.forRoot(process.env.MONGO_URI || "mongodb://localhost:27017/todos"),
+    MongooseModule.forRoot(process.env.MONGO_URI || "mongodb://localhost:27017/crential_db"),
     HealthModule,
     CredentialModule,
   ],
