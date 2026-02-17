@@ -1,0 +1,35 @@
+{
+  "common": {
+    "update": "{what} wird aktualisiert"
+  },
+  "languages": {
+    "de-DE": "Deutsch",
+    "en-US": "Englisch",
+    "fr-FR": "Französisch"
+  },
+  "pages": {
+    "landing": {
+      "title": "Startseite"
+    },
+    "logout": {
+      "title": "Abmelden"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "tabs": {
+        "advanced": {
+          "title": "Erweitert"
+        },
+        "general": {
+          "sections": {
+            "locale": "Sprache"
+          },
+          "title": "Allgemein"
+        }
+      },
+      "title": "Einstellungen"
+    }
+  }
+}

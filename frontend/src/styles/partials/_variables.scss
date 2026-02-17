@@ -1,0 +1,60 @@
+// enables the use of padding-classes and margin-classes. e.g. .pa-1
+@for $i from 1 through 16 {
+    .pa-#{$i} {
+        padding: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .pt-#{$i} {
+        padding-top: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .pr-#{$i} {
+        padding-right: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .pb-#{$i} {
+        padding-bottom: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .pl-#{$i} {
+        padding-left: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .ma-#{$i} {
+        margin: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .mt-#{$i} {
+        margin-top: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .mr-#{$i} {
+        margin-right: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .mb-#{$i} {
+        margin-bottom: #{$i}em;
+    }
+}
+
+@for $i from 1 through 16 {
+    .ml-#{$i} {
+        margin-left: #{$i}em;
+    }
+}

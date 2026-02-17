@@ -1,0 +1,33 @@
+{
+  "author": "https://github.com/CodeRigged",
+  "description": "A code library for validation, reusable in the frontend and backend.",
+  "devDependencies": {
+    "mongodb": "^6.21.0",
+    "typescript": "^5.4.2"
+  },
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/types/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "keywords": [
+    "shared",
+    "library",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "build/index.js",
+  "name": "shared",
+  "scripts": {
+    "build": "tsc --incremental",
+    "clean": "rm -rf build tsconfig.tsbuildinfo",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "lint:autofix": "eslint . --ext ts --fix --report-unused-disable-directives --max-warnings 0",
+    "start:dev": "tsc -w --incremental"
+  },
+  "type": "module",
+  "types": "build/index.d.ts",
+  "version": "1.0.0"
+}

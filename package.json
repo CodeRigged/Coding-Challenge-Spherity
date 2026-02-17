@@ -1,0 +1,43 @@
+{
+  "author": "https://github.com/CodeRigged",
+  "description": "A fullstack example of a pnpm workspace.",
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@typescript-eslint/eslint-plugin": "8.54.0",
+    "eslint": "9.39.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-perfectionist": "5.5.0",
+    "rimraf": "^6.1.2",
+    "wait-on": "^9.0.3",
+    "typescript-eslint": "8.55.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "keywords": [
+    "fullstack",
+    "template",
+    "pnpm",
+    "typescript",
+    "react",
+    "nestjs",
+    "mongoose",
+    "testing",
+    "eslint",
+    "prettier",
+    "docker"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fullstack-app-template",
+  "scripts": {
+    "build": "pnpm --stream -r run build",
+    "clean": "rimraf build dist node_modules && pnpm -r run clean",
+    "dev": "pnpm --parallel --stream -r run dev",
+    "predev": "node ./createEnvFiles.mjs && pnpm -F shared build",
+    "test": "pnpm --parallel --stream -r run test",
+    "lint": "pnpm --parallel --stream -r run lint",
+    "lint:autofix": "pnpm --parallel --stream -r run lint:autofix"
+  },
+  "version": "1.0.0"
+}
