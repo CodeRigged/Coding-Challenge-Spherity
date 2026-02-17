@@ -1,4 +1,4 @@
-import type { IssueCredentialDto } from "shared/types"
+import type { IssueCredentialDto, Nullable } from "shared/types"
 
 import { Box, Button, TextField } from "@mui/material"
 import { useState } from "react"
@@ -19,30 +19,37 @@ const CredentialForm = () => {
   const { addCredential, isPending } = useCredentialStore()
   const { setError } = useErrorStore()
 
+  // Helper to validate JSON claims
+  const parseClaims = (input: string): Nullable<Record<string, unknown>> => {
+    try {
+      return JSON.parse(input)
+    } catch {
+      return null
+    }
+  }
+
+  const isFormValid = Boolean(form.type && form.issuer && form.subject && claimsInput && parseClaims(claimsInput))
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleClaimsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setClaimsInput(e.target.value)
-    try {
-      setForm({ ...form, claims: JSON.parse(e.target.value) })
-    } catch {
-      // ignore parse error, show on submit
-    }
   }
 
-  const handleAdd = async (e: React.FormEvent) => {
+  const handleAdd = async (e: React.SubmitEvent) => {
     e.preventDefault()
-    try {
-      if (!form.type || !form.issuer || !form.subject || !claimsInput) throw new Error("All fields required")
-      JSON.parse(claimsInput) // validate claims
-      await addCredential(form)
-      setForm(initialForm)
-      setClaimsInput("")
-    } catch (err) {
-      setError((err as Error).message)
-    }
+
+    if (!isFormValid) return
+
+    const claims = parseClaims(claimsInput) as Record<string, unknown>
+    await addCredential({ ...form, claims })
+      .then(() => {
+        setForm(initialForm)
+        setClaimsInput("")
+      })
+      .catch(setError)
   }
 
   return (
@@ -88,30 +95,10 @@ const CredentialForm = () => {
         required
         multiline
         minRows={2}
-        error={
-          !!claimsInput &&
-          (() => {
-            try {
-              JSON.parse(claimsInput)
-              return false
-            } catch {
-              return true
-            }
-          })()
-        }
-        helperText={
-          !!claimsInput &&
-          (() => {
-            try {
-              JSON.parse(claimsInput)
-              return ""
-            } catch {
-              return "Invalid JSON"
-            }
-          })()
-        }
+        error={!!claimsInput && !parseClaims(claimsInput)}
+        helperText={!!claimsInput && !parseClaims(claimsInput) ? "Invalid JSON" : ""}
       />
-      <Button type="submit" variant="contained" color="primary" disabled={isPending}>
+      <Button type="submit" variant="contained" color="primary" disabled={isPending || !isFormValid}>
         Issue Credential
       </Button>
     </Box>

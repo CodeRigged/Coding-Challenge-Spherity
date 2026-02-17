@@ -1,27 +1,17 @@
-import type { Credential } from "shared/types"
+import type { Credential, Nullable } from "shared/types"
 
-import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import DeleteIcon from "@mui/icons-material/Delete"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import VisibilityIcon from "@mui/icons-material/Visibility"
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material"
+import { Card, CardActions, CardContent, IconButton, Tooltip, Typography } from "@mui/material"
 import { useState } from "react"
 
 import { useCredentialStore } from "~/stores/credential-store"
 import { useErrorStore } from "~/stores/state-handlers"
+
+import CredentialDetailsDialog from "./dialogs/CredentialDetailsDialog"
+import DeleteConfirmDialog from "./dialogs/DeleteConfirmDialog"
+import VerifyDialog from "./dialogs/VerifyDialog"
 
 interface CredentialListItemProps {
   credential: Credential
@@ -31,20 +21,30 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
   const { deleteCredential, findCredential, isPending, verifyCredential } = useCredentialStore()
   const { setError } = useErrorStore()
   const [showDetails, setShowDetails] = useState(false)
+  const [detailsData, setDetailsData] = useState<Nullable<Credential>>(null)
   const [showVerify, setShowVerify] = useState(false)
-  const [verifyResult, setVerifyResult] = useState<null | { valid: boolean; payload?: unknown; error?: string }>(null)
+  const [verifyResult, setVerifyResult] =
+    useState<Nullable<{ valid: boolean; payload?: unknown; error?: string }>>(null)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const handleDelete = async () => {
+    setShowDeleteConfirm(true)
+  }
+
+  const confirmDelete = async () => {
+    setShowDeleteConfirm(false)
     await deleteCredential(credential._id).catch(setError)
   }
 
   const handleFetch = async () => {
-    const data = await findCredential(credential._id)
-    if (data && !("error" in data)) {
-      await navigator.clipboard.writeText(JSON.stringify(data, null, 2))
-    } else {
-      setError((data as any)?.error || "Unable to share credential")
-    }
+    await findCredential(credential._id)
+      .then(res => {
+        if (!(res instanceof Error)) {
+          setDetailsData(res)
+          setShowDetails(true)
+        }
+      })
+      .catch(setError)
   }
 
   const handleVerify = async () => {
@@ -65,19 +65,11 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
         <Typography variant="body2" gutterBottom>
           Subject: {credential.subject}
         </Typography>
-        <Typography variant="caption" color="text.secondary" noWrap>
-          JWT: {credential.jwt}
-        </Typography>
       </CardContent>
       <CardActions>
         <Tooltip title="View Details">
-          <IconButton onClick={() => setShowDetails(true)} disabled={isPending}>
-            <VisibilityIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Share (copy JSON)">
           <IconButton onClick={handleFetch} disabled={isPending}>
-            <ContentCopyIcon />
+            <VisibilityIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Verify">
@@ -90,39 +82,20 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+        <DeleteConfirmDialog
+          open={showDeleteConfirm}
+          onClose={() => setShowDeleteConfirm(false)}
+          onConfirm={confirmDelete}
+          isPending={isPending}
+        />
       </CardActions>
-      <Dialog open={showDetails} onClose={() => setShowDetails(false)} maxWidth="md" fullWidth>
-        <DialogTitle>Credential Details</DialogTitle>
-        <DialogContent>
-          <TextField
-            value={JSON.stringify(credential, null, 2)}
-            multiline
-            fullWidth
-            minRows={10}
-            InputProps={{ readOnly: true }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowDetails(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={showVerify} onClose={() => setShowVerify(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Verify Credential</DialogTitle>
-        <DialogContent>
-          {verifyResult ? (
-            verifyResult.valid ? (
-              <Typography color="success.main">Credential is valid</Typography>
-            ) : (
-              <Typography color="error.main">Invalid: {verifyResult.error}</Typography>
-            )
-          ) : (
-            <Typography>Verifying...</Typography>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowVerify(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      <CredentialDetailsDialog open={showDetails} onClose={() => setShowDetails(false)} credential={detailsData} />
+      <VerifyDialog
+        open={showVerify}
+        isPending={isPending}
+        onClose={() => setShowVerify(false)}
+        verifyResult={verifyResult}
+      />
     </Card>
   )
 }

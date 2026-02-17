@@ -10,7 +10,7 @@ interface CredentialStore extends PendingState {
   addCredential: (data: IssueCredentialDto) => Promise<void>
   deleteCredential: (id: Credential["_id"]) => Promise<void>
   fetchCredentials: (subject?: string) => Promise<void>
-  findCredential: (id: Credential["_id"]) => Promise<Credential | { error: string }>
+  findCredential: (id: Credential["_id"]) => Promise<Credential | Error>
   verifyCredential: (jwt: string) => Promise<{ valid: boolean; payload?: unknown; error?: string }>
 }
 
@@ -58,7 +58,7 @@ export const useCredentialStore = create<CredentialStore>((set, get, ...args) =>
   },
   findCredential: async id => {
     const { setIsPending } = get()
-    setIsPending(true, "Sharing credential...")
+    setIsPending(true, "Fetching credential...")
     try {
       const res = await apiFetch(`${CREDENTIAL_API_ENDPOINT}/${id}`)
       return await res.json()

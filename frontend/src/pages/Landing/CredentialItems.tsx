@@ -9,7 +9,7 @@ const CredentialItems = () => {
   return (
     <Stack spacing={2}>
       {credentials.map(credential => (
-        <CredentialListItem key={credential._id as string} credential={credential} />
+        <CredentialListItem key={credential._id as unknown as string} credential={credential} />
       ))}
       {credentials.length === 0 && !isPending && (
         <Typography align="center" color="text.secondary" mt={2}>
