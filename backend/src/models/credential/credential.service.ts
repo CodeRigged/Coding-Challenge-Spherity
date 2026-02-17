@@ -37,11 +37,6 @@ export class CredentialService {
   }
 
   /**
-   *
-   * @param jwt
-   * @returns
-   */
-  /**
    * Verify a credential JWT and return its payload if valid.
    * @param {string} jwt - The JWT to verify
    * @returns {Promise<{ payload?: unknown; valid: boolean; error?: string }>} Verification result
@@ -81,6 +76,6 @@ export class CredentialService {
    * @returns {Promise<Nullable<Credential>>} The deleted credential document, or null if not found
    */
   async remove(id: string): Promise<Nullable<Credential>> {
-    return await this.credentialModel.findByIdAndDelete(id)
+    return this.credentialModel.findByIdAndDelete(id)
   }
 }

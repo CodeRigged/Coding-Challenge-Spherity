@@ -8,7 +8,6 @@ import { CredentialService } from "./credential.service.js"
 export class CredentialController {
   constructor(private readonly credentialService: CredentialService) {}
 
-
   /**
    * Issue a new credential.
    * @param {IssueCredentialDto} body - The credential data to issue
@@ -22,7 +21,6 @@ export class CredentialController {
     return this.credentialService.issueCredential(type, issuer, subject, claims)
   }
 
-
   /**
    * Get all credentials in the wallet.
    * @returns {Promise<Credential[]>} Array of credential documents
@@ -31,7 +29,6 @@ export class CredentialController {
   async list() {
     return this.credentialService.findAll()
   }
-
 
   /**
    * Verify a credential JWT.
@@ -42,7 +39,6 @@ export class CredentialController {
   async verify(@Body() body: { jwt: string }) {
     return this.credentialService.verifyCredential(body.jwt)
   }
-
 
   /**
    * Fetch a credential by its ID.
@@ -58,7 +54,6 @@ export class CredentialController {
     const { claims, issuer, jwt, subject, type } = credential
     return { claims, issuer, jwt, subject, type }
   }
-
 
   /**
    * Delete a credential by its ID.
