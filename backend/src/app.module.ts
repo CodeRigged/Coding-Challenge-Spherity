@@ -5,7 +5,7 @@ import { LoggerModule } from "nestjs-pino"
 
 import { HealthModule } from "./base/health.module.js"
 import { loggerOptions } from "./config/logger.js"
-import { TodoModule } from "./models/todo/todo.module.js"
+import { CredentialModule } from "./models/credential/credential.module.js"
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ dotenv.config()
     LoggerModule.forRoot(loggerOptions),
     MongooseModule.forRoot(process.env.MONGO_URI || "mongodb://localhost:27017/todos"),
     HealthModule,
-    TodoModule,
+    CredentialModule,
   ],
 })
 export class AppModule {}
