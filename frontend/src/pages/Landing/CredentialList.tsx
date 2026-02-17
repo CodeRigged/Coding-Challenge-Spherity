@@ -13,8 +13,7 @@ const CredentialList = () => {
 
   useEffect(() => {
     fetchCredentials().catch(setError)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchCredentials, setError])
 
   return (
     <Box maxWidth={640} mx="auto" mt={4}>

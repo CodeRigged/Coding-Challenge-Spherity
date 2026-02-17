@@ -1,7 +1,8 @@
-import type { IssueCredentialDto } from "shared/types"
+import type { IssueCredentialDto, VerifyCredentialResult } from "shared/types"
 
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post } from "@nestjs/common"
 
+import { Credential } from "./credential.schema.js"
 import { CredentialService } from "./credential.service.js"
 
 @Controller("credentials")
@@ -17,7 +18,7 @@ export class CredentialController {
   async issue(
     @Body()
     { claims, issuer, subject, type }: IssueCredentialDto
-  ) {
+  ): Promise<Credential> {
     return this.credentialService.issueCredential(type, issuer, subject, claims)
   }
 
@@ -26,17 +27,17 @@ export class CredentialController {
    * @returns {Promise<Credential[]>} Array of credential documents
    */
   @Get()
-  async list() {
+  async list(): Promise<Credential[]> {
     return this.credentialService.findAll()
   }
 
   /**
    * Verify a credential JWT.
    * @param {{ jwt: string }} body - The JWT to verify
-   * @returns {Promise<{ payload?: unknown; valid: boolean; error?: string }>} Verification result
+   * @returns {Promise<VerifyCredentialResult>} Verification result
    */
   @Post("verify")
-  async verify(@Body() body: { jwt: string }) {
+  async verify(@Body() body: { jwt: string }): Promise<VerifyCredentialResult> {
     return this.credentialService.verifyCredential(body.jwt)
   }
 
@@ -47,7 +48,7 @@ export class CredentialController {
    * @throws {NotFoundException} If the credential is not found
    */
   @Get(":id")
-  async findOne(@Param("id") id: string) {
+  async findOne(@Param("id") id: string): Promise<Credential> {
     const credential = await this.credentialService.findOne(id)
     if (!credential) throw new NotFoundException("Credential not found")
 
@@ -62,7 +63,7 @@ export class CredentialController {
    * @throws {NotFoundException} If the credential is not found
    */
   @Delete(":id")
-  async remove(@Param("id") id: string) {
+  async remove(@Param("id") id: string): Promise<{ deleted: boolean }> {
     const deleted = await this.credentialService.remove(id)
     if (!deleted) throw new NotFoundException("Credential not found")
     return { deleted: true }

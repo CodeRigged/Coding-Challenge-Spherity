@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { InjectModel } from "@nestjs/mongoose"
 import { Model } from "mongoose"
-import { Nullable } from "shared/types"
+import { CredentialJWTPayload, Nullable, VerifyCredentialResult } from "shared/types"
 import { v4 as uuidv4 } from "uuid"
 
 import { Credential, CredentialDocument } from "./credential.schema.js"
@@ -19,18 +19,30 @@ export class CredentialService {
    * @param {string} type - The type of the credential
    * @param {string} issuer - The issuer of the credential
    * @param {string} subject - The subject of the credential
-   * @param {Record<string, unknown>} claims - The claims to include in the credential
+   * @param {Record<string, unknown>} claims - The claims to include in the credential (arbitrary JSON object)
    * @returns {Promise<Credential>} The issued credential document
    */
-  async issueCredential(type: string, issuer: string, subject: string, claims: Record<string, unknown>) {
+  async issueCredential(
+    type: string,
+    issuer: string,
+    subject: string,
+    claims: Record<string, unknown>
+  ): Promise<Credential> {
+    /**
+     * issued at (iat) timestamp in seconds since the Unix epoch.
+     *
+     * JWT and similar standards require the 'iat' field to be represented in seconds,
+     * not milliseconds.
+     */
+    const iat = Math.floor(Date.now() / 1000)
     const payload = {
       claims,
-      iat: Math.floor(Date.now() / 1000),
+      iat,
       iss: issuer,
       jti: uuidv4(),
       sub: subject,
       type,
-    }
+    } as CredentialJWTPayload
     const jwt = this.jwtService.sign(payload)
     const credential = new this.credentialModel({ claims, issuer, jwt, subject, type })
     return credential.save()
@@ -39,11 +51,11 @@ export class CredentialService {
   /**
    * Verify a credential JWT and return its payload if valid.
    * @param {string} jwt - The JWT to verify
-   * @returns {Promise<{ payload?: unknown; valid: boolean; error?: string }>} Verification result
+   * @returns {Promise<VerifyCredentialResult>} Verification result
    */
-  async verifyCredential(jwt: string) {
+  async verifyCredential(jwt: string): Promise<VerifyCredentialResult> {
     try {
-      const payload = this.jwtService.verify(jwt)
+      const payload = this.jwtService.verify<CredentialJWTPayload>(jwt)
       return { payload, valid: true }
     } catch (e: unknown) {
       if (e instanceof Error) {

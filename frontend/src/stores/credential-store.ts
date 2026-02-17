@@ -1,4 +1,4 @@
-import { Credential, IssueCredentialDto } from "shared/types"
+import { Credential, IssueCredentialDto, VerifyCredentialResult } from "shared/types"
 import { create } from "zustand"
 
 import { apiFetch } from "~/utils/api"
@@ -11,7 +11,7 @@ interface CredentialStore extends PendingState {
   deleteCredential: (id: Credential["_id"]) => Promise<void>
   fetchCredentials: (subject?: string) => Promise<void>
   findCredential: (id: Credential["_id"]) => Promise<Credential | Error>
-  verifyCredential: (jwt: string) => Promise<{ valid: boolean; payload?: unknown; error?: string }>
+  verifyCredential: (jwt: string) => Promise<VerifyCredentialResult>
 }
 
 const CREDENTIAL_API_ENDPOINT = "/credentials"
@@ -75,7 +75,7 @@ export const useCredentialStore = create<CredentialStore>((set, get, ...args) =>
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })
-      return await res.json()
+      return (await res.json()) as VerifyCredentialResult
     } finally {
       setIsPending(false)
     }

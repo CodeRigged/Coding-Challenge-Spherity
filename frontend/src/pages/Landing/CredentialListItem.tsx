@@ -1,4 +1,4 @@
-import type { Credential, Nullable } from "shared/types"
+import type { Credential, Nullable, VerifyCredentialResult } from "shared/types"
 
 import DeleteIcon from "@mui/icons-material/Delete"
 import VerifiedIcon from "@mui/icons-material/Verified"
@@ -20,12 +20,11 @@ interface CredentialListItemProps {
 const CredentialListItem = ({ credential }: CredentialListItemProps) => {
   const { deleteCredential, findCredential, isPending, verifyCredential } = useCredentialStore()
   const { setError } = useErrorStore()
-  const [showDetails, setShowDetails] = useState(false)
+  const [showDetails, setShowDetails] = useState<boolean>(false)
   const [detailsData, setDetailsData] = useState<Nullable<Credential>>(null)
-  const [showVerify, setShowVerify] = useState(false)
-  const [verifyResult, setVerifyResult] =
-    useState<Nullable<{ valid: boolean; payload?: unknown; error?: string }>>(null)
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [showVerify, setShowVerify] = useState<boolean>(false)
+  const [verifyResult, setVerifyResult] = useState<Nullable<VerifyCredentialResult>>(null)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false)
 
   const handleDelete = async () => {
     setShowDeleteConfirm(true)
@@ -36,7 +35,7 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
     await deleteCredential(credential._id).catch(setError)
   }
 
-  const handleFetch = async () => {
+  const fetchCredentialById = async () => {
     await findCredential(credential._id)
       .then(res => {
         if (!(res instanceof Error)) {
@@ -68,7 +67,7 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
       </CardContent>
       <CardActions>
         <Tooltip title="View Details">
-          <IconButton onClick={handleFetch} disabled={isPending}>
+          <IconButton onClick={fetchCredentialById} disabled={isPending}>
             <VisibilityIcon />
           </IconButton>
         </Tooltip>

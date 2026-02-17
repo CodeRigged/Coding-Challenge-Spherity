@@ -15,7 +15,7 @@ const initialForm: IssueCredentialDto = {
 
 const CredentialForm = () => {
   const [form, setForm] = useState<IssueCredentialDto>(initialForm)
-  const [claimsInput, setClaimsInput] = useState("")
+  const [claimsInput, setClaimsInput] = useState<string>("")
   const { addCredential, isPending } = useCredentialStore()
   const { setError } = useErrorStore()
 

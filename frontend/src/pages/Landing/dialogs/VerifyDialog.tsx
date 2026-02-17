@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
+import { Nullable, VerifyCredentialResult } from "shared/types"
 
 interface VerifyDialogProps {
   isPending: boolean
   open: boolean
-  verifyResult: { valid: boolean; payload?: unknown; error?: string } | null
+  verifyResult: Nullable<VerifyCredentialResult>
   onClose: () => void
 }
 

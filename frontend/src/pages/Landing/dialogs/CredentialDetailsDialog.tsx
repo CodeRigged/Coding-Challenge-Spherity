@@ -1,4 +1,4 @@
-import type { Credential } from "shared/types"
+import type { Credential, Nullable } from "shared/types"
 
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import {
@@ -15,7 +15,7 @@ import {
 } from "@mui/material"
 
 interface CredentialDetailsDialogProps {
-  credential: Credential | null
+  credential: Nullable<Credential>
   open: boolean
   onClose: () => void
 }
