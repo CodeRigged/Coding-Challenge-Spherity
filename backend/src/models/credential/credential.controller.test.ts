@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, it, vi } from "vitest"
 import { CredentialController } from "./credential.controller.js"
 import { CredentialService } from "./credential.service.js"
 
-describe("CredentialController (e2e)", () => {
+describe("CredentialController", () => {
   let app: INestApplication
   const credentialService = {
     findAll: vi
