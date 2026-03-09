@@ -10,7 +10,6 @@ import { CredentialService } from "./credential.service.js"
 @Module({
   controllers: [CredentialController],
   imports: [
-    ConfigModule,
     MongooseModule.forFeature([{ name: Credential.name, schema: CredentialSchema }]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
