@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common"
+import { ConfigModule, ConfigService } from "@nestjs/config"
 import { JwtModule } from "@nestjs/jwt"
 import { MongooseModule } from "@nestjs/mongoose"
 
@@ -9,10 +10,15 @@ import { CredentialService } from "./credential.service.js"
 @Module({
   controllers: [CredentialController],
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([{ name: Credential.name, schema: CredentialSchema }]),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET!,
-      signOptions: { expiresIn: "1y" },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>("JWT_SECRET"),
+        signOptions: { expiresIn: "1y" },
+      }),
     }),
   ],
   providers: [CredentialService],
