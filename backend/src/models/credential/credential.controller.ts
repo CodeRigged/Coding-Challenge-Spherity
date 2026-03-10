@@ -52,8 +52,8 @@ export class CredentialController {
     const credential = await this.credentialService.findOne(id)
     if (!credential) throw new NotFoundException("Credential not found")
 
-    const { claims, issuer, jwt, subject, type } = credential
-    return { claims, issuer, jwt, subject, type }
+    const { claims, issuer, jwt, subject, type, verified } = credential
+    return { claims, issuer, jwt, subject, type, verified }
   }
 
   /**

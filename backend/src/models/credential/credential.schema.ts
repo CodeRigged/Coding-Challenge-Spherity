@@ -19,6 +19,9 @@ export class Credential {
 
   @Prop({ required: true })
   jwt: string
+
+  @Prop({ default: false, required: false })
+  verified: boolean
 }
 
 export const CredentialSchema = SchemaFactory.createForClass(Credential)

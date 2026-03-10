@@ -56,6 +56,8 @@ export class CredentialService {
   async verifyCredential(jwt: string): Promise<VerifyCredentialResult> {
     try {
       const payload = this.jwtService.verify<CredentialJWTPayload>(jwt)
+      // Find and update the credential's verified status if it exists
+      await this.credentialModel.findOneAndUpdate({ jwt }, { $set: { verified: true } }, { new: true })
       return { payload, valid: true }
     } catch (e: unknown) {
       if (e instanceof Error) {
