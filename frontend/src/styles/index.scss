@@ -1,4 +1,5 @@
 @use "./partials/variables";
+@use "./partials/keyframes";
 
 body {
   margin: 0;
@@ -11,4 +12,57 @@ body {
 
 .section {
   padding: 1em 0.5em;
+}
+
+// Credential List Styles
+.credential-list {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.credential-list__item {
+  margin-bottom: 0.75rem;
+  transition: box-shadow 0.3s, border-color 0.3s;
+
+  &:hover {
+    border-color: var(--mui-palette-primary-light, #90caf9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.credential-list__item--fade-in {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.credential-list__item-content {
+  padding-bottom: 0.5rem;
+}
+
+.credential-list__item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.credential-list__item-actions {
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.credential-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.credential-list__empty-icon {
+  color: var(--mui-palette-action-disabled, #bdbdbd);
+  font-size: 48px !important;
+  margin-bottom: 0.5rem;
+}
+
+.credential-list__empty-text {
+  text-align: center;
+  color: var(--mui-palette-text-secondary, #757575);
 }

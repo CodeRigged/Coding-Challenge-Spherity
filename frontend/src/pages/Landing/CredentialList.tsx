@@ -16,19 +16,15 @@ const CredentialList = () => {
   }, [fetchCredentials, setError])
 
   return (
-    <Box maxWidth={640} mx="auto" mt={4}>
-      <Typography variant="h4" gutterBottom align="center">
+    <Box maxWidth={640} mx="auto" mt={4} px={2}>
+      <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
         Issued Credentials
       </Typography>
       <CredentialForm />
       {isPending && (
-        <Box display="flex" justifyContent="center" my={2}>
+        <Box display="flex" justifyContent="center" alignItems="center" my={2} gap={2}>
           <CircularProgress size={32} />
-          {pendingMessage && (
-            <Typography ml={2} color="text.secondary">
-              {pendingMessage}
-            </Typography>
-          )}
+          {pendingMessage && <Typography color="text.secondary">{pendingMessage}</Typography>}
         </Box>
       )}
       <CredentialItems />

@@ -36,4 +36,5 @@ export interface IssueCredentialDto {
 export interface Credential extends IssueCredentialDto {
   _id: ObjectId
   jwt: string
+  verified: boolean
 }

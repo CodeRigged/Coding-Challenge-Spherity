@@ -3,7 +3,7 @@ import type { Credential, Nullable, VerifyCredentialResult } from "shared/types"
 import DeleteIcon from "@mui/icons-material/Delete"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import VisibilityIcon from "@mui/icons-material/Visibility"
-import { Card, CardActions, CardContent, IconButton, Tooltip, Typography } from "@mui/material"
+import { Box, Card, CardActions, CardContent, Chip, IconButton, Tooltip, Typography } from "@mui/material"
 import { useState } from "react"
 
 import { useCredentialStore } from "~/stores/credential-store"
@@ -26,13 +26,16 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
   const [verifyResult, setVerifyResult] = useState<Nullable<VerifyCredentialResult>>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false)
 
-  const handleDelete = async () => {
-    setShowDeleteConfirm(true)
+  const isValid = credential.verified || verifyResult?.valid
+
+  const handleVerify = async () => {
+    setShowVerify(true)
+    const result = await verifyCredential(credential.jwt)
+    setVerifyResult(result)
   }
 
-  const confirmDelete = async () => {
-    setShowDeleteConfirm(false)
-    await deleteCredential(credential._id).catch(setError)
+  const handleDelete = async () => {
+    setShowDeleteConfirm(true)
   }
 
   const fetchCredentialById = async () => {
@@ -46,18 +49,27 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
       .catch(setError)
   }
 
-  const handleVerify = async () => {
-    setShowVerify(true)
-    const result = await verifyCredential(credential.jwt)
-    setVerifyResult(result)
+  const confirmDelete = async () => {
+    setShowDeleteConfirm(false)
+    await deleteCredential(credential._id).catch(setError)
   }
 
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <Typography variant="subtitle2" color="text.secondary">
-          {credential.type}
-        </Typography>
+    <Card className="credential-list__item" variant="outlined">
+      <CardContent className="credential-list__item-content">
+        <Box className="credential-list__item-header">
+          <Typography variant="subtitle2" color="text.secondary">
+            {credential.type}
+          </Typography>
+          <Chip
+            label={isValid ? "Verified" : "Not Verified"}
+            color={isValid ? "success" : "warning"}
+            size="small"
+            icon={<VerifiedIcon />}
+            sx={{ ml: 1 }}
+            aria-label={isValid ? "Credential verified" : "Credential not verified"}
+          />
+        </Box>
         <Typography variant="body1" gutterBottom>
           Issuer: {credential.issuer}
         </Typography>
@@ -65,22 +77,34 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
           Subject: {credential.subject}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Tooltip title="View Details">
-          <IconButton onClick={fetchCredentialById} disabled={isPending}>
-            <VisibilityIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Verify">
-          <IconButton onClick={handleVerify} disabled={isPending}>
+      <CardActions className="credential-list__item-actions">
+        <Tooltip title="Verify Credential">
+          <IconButton onClick={handleVerify} disabled={isPending || isValid} aria-label="Verify">
             <VerifiedIcon />
           </IconButton>
         </Tooltip>
+
+        <VerifyDialog
+          open={showVerify}
+          isPending={isPending}
+          onClose={() => setShowVerify(false)}
+          verifyResult={verifyResult}
+        />
+
+        <Tooltip title="View Details">
+          <IconButton onClick={fetchCredentialById} disabled={isPending} aria-label="View Details">
+            <VisibilityIcon />
+          </IconButton>
+        </Tooltip>
+
+        <CredentialDetailsDialog open={showDetails} onClose={() => setShowDetails(false)} credential={detailsData} />
+
         <Tooltip title="Delete">
-          <IconButton onClick={handleDelete} disabled={isPending}>
+          <IconButton onClick={handleDelete} disabled={isPending} aria-label="Delete">
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+
         <DeleteConfirmDialog
           open={showDeleteConfirm}
           onClose={() => setShowDeleteConfirm(false)}
@@ -88,13 +112,6 @@ const CredentialListItem = ({ credential }: CredentialListItemProps) => {
           isPending={isPending}
         />
       </CardActions>
-      <CredentialDetailsDialog open={showDetails} onClose={() => setShowDetails(false)} credential={detailsData} />
-      <VerifyDialog
-        open={showVerify}
-        isPending={isPending}
-        onClose={() => setShowVerify(false)}
-        verifyResult={verifyResult}
-      />
     </Card>
   )
 }

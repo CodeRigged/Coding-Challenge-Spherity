@@ -1,6 +1,6 @@
 import type { IssueCredentialDto, Nullable } from "shared/types"
 
-import { Box, Button, TextField } from "@mui/material"
+import { Box, Button, Card, CardContent, CircularProgress, TextField, Tooltip, Typography } from "@mui/material"
 import { useState } from "react"
 
 import { useCredentialStore } from "~/stores/credential-store"
@@ -44,6 +44,7 @@ const CredentialForm = () => {
     if (!isFormValid) return
 
     const claims = parseClaims(claimsInput) as Record<string, unknown>
+
     await addCredential({ ...form, claims })
       .then(() => {
         setForm(initialForm)
@@ -53,55 +54,85 @@ const CredentialForm = () => {
   }
 
   return (
-    <Box component="form" onSubmit={handleAdd} mb={3} display="flex" flexDirection="column" gap={2}>
-      <TextField
-        name="type"
-        value={form.type}
-        onChange={handleChange}
-        placeholder="Credential Type"
-        label="Type"
-        disabled={isPending}
-        size="small"
-        required
-      />
-      <TextField
-        name="issuer"
-        value={form.issuer}
-        onChange={handleChange}
-        placeholder="Issuer DID or Name"
-        label="Issuer"
-        disabled={isPending}
-        size="small"
-        required
-      />
-      <TextField
-        name="subject"
-        value={form.subject}
-        onChange={handleChange}
-        placeholder="Subject DID or Name"
-        label="Subject"
-        disabled={isPending}
-        size="small"
-        required
-      />
-      <TextField
-        name="claims"
-        value={claimsInput}
-        onChange={handleClaimsChange}
-        placeholder='Claims (JSON, e.g. {"name":"Alice"})'
-        label="Claims"
-        disabled={isPending}
-        size="small"
-        required
-        multiline
-        minRows={2}
-        error={!!claimsInput && !parseClaims(claimsInput)}
-        helperText={!!claimsInput && !parseClaims(claimsInput) ? "Invalid JSON" : ""}
-      />
-      <Button type="submit" variant="contained" color="primary" disabled={isPending || !isFormValid}>
-        Issue Credential
-      </Button>
-    </Box>
+    <Card elevation={3} sx={{ mb: 3 }}>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Issue New Credential
+        </Typography>
+        <Box component="form" onSubmit={handleAdd} display="flex" flexDirection="column" gap={2}>
+          <Tooltip title="Type of credential">
+            <TextField
+              name="type"
+              value={form.type}
+              onChange={handleChange}
+              placeholder="Credential Type"
+              label="Type"
+              disabled={isPending}
+              size="small"
+              required
+              helperText="e.g. VerifiableCredential"
+            />
+          </Tooltip>
+          <Tooltip title="Issuer's DID or name (who issues the credential)">
+            <TextField
+              name="issuer"
+              value={form.issuer}
+              onChange={handleChange}
+              placeholder="Issuer DID or Name"
+              label="Issuer"
+              disabled={isPending}
+              size="small"
+              required
+              helperText="e.g. did:example:issuer123"
+            />
+          </Tooltip>
+          <Tooltip title="Subject's DID or name (who receives the credential)">
+            <TextField
+              name="subject"
+              value={form.subject}
+              onChange={handleChange}
+              placeholder="Subject DID or Name"
+              label="Subject"
+              disabled={isPending}
+              size="small"
+              required
+              helperText="e.g. did:example:subject456"
+            />
+          </Tooltip>
+          <Tooltip title='Claims (JSON, e.g. {"name":"Alice"})'>
+            <TextField
+              name="claims"
+              value={claimsInput}
+              onChange={handleClaimsChange}
+              placeholder='Claims (JSON, e.g. {"name":"Alice"})'
+              label="Claims"
+              disabled={isPending}
+              size="small"
+              required
+              multiline
+              minRows={2}
+              error={!!claimsInput && !parseClaims(claimsInput)}
+              helperText={
+                !!claimsInput && !parseClaims(claimsInput)
+                  ? "Invalid JSON format"
+                  : "Paste or type JSON object for claims"
+              }
+            />
+          </Tooltip>
+          <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2} mt={1}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isPending || !isFormValid}
+              startIcon={isPending ? <CircularProgress size={18} color="inherit" /> : null}
+            >
+              {isPending ? "Issuing..." : "Issue Credential"}
+            </Button>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
   )
 }
 
