@@ -1,12 +1,12 @@
 import type { Credential } from "shared/types"
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import { Box, Card, CardContent, CardHeader, CircularProgress, IconButton, Tooltip, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
+import BackButton from "~/components/navigation/BackButton"
 import { useCredentialStore } from "~/stores/credential-store"
 
 const CredentialPage = () => {
@@ -15,7 +15,6 @@ const CredentialPage = () => {
   const [credential, setCredential] = useState<Credential | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (id) {
@@ -44,17 +43,17 @@ const CredentialPage = () => {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
       <Card sx={{ boxShadow: 4, maxWidth: 700, width: "100%" }}>
         <CardHeader
-          avatar={
-            <IconButton onClick={() => navigate(-1)} aria-label="Back">
-              <ArrowBackIcon />
-            </IconButton>
-          }
+          avatar={<BackButton />}
           title={
             <Box display="flex" alignItems="center" gap={1}>
               <Typography variant="h6">Credential Details</Typography>
-              {credential.verified && (
+              {credential.verified ? (
                 <Tooltip title="Verified">
-                  <VerifiedIcon color="success" fontSize="small" />
+                  <VerifiedIcon color="success" />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Not Verified">
+                  <VerifiedIcon color="warning" />
                 </Tooltip>
               )}
             </Box>
@@ -83,6 +82,7 @@ const CredentialPage = () => {
           <Box
             mb={2}
             sx={{
+              border: "1px solid",
               borderRadius: 2,
               fontSize: 14,
               maxHeight: 400,

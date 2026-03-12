@@ -18,20 +18,20 @@ const LandingPage = () => {
         <Typography variant="body1" color="text.secondary" mb={4}>
           Manage and issue credentials easily.
         </Typography>
-        <Stack direction={{ sm: "row", xs: "column" }} spacing={3}>
-          <LinkButton
-            label="View All Credentials"
-            variant="contained"
-            color="primary"
-            size="large"
-            to={CredentialRoutes.OVERVIEW}
-          />
+        <Stack direction={{ sm: "row", xs: "row" }} spacing={3}>
           <LinkButton
             label="Create New Credential"
             variant="contained"
             color="primary"
             size="large"
             to={CredentialRoutes.NEW}
+          />
+          <LinkButton
+            label="View All Credentials"
+            variant="contained"
+            color="primary"
+            size="large"
+            to={CredentialRoutes.OVERVIEW}
           />
         </Stack>
       </Box>
