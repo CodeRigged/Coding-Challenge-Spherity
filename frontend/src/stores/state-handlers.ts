@@ -14,15 +14,17 @@ export const useErrorStore = create<ErrorStore>(set => ({
 }))
 
 export interface PendingState {
+  disableSpinner: boolean
   isPending: boolean
   text: Nullable<string>
-  setIsPending: (pending: boolean, text?: Nullable<string>) => void
+  setIsPending: (pending: boolean, text?: Nullable<string>, disableSpinner?: boolean) => void
 }
 
 export const createPendingSlice: StateCreator<PendingState> = set => ({
+  disableSpinner: false,
   isPending: false,
   text: null,
-  setIsPending: (isPending, text = null) => {
-    set({ isPending, text })
+  setIsPending: (isPending, text = null, disableSpinner = false) => {
+    set({ disableSpinner, isPending, text })
   },
 })

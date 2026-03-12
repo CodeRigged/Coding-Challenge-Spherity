@@ -68,7 +68,7 @@ export const useCredentialStore = create<CredentialStore>((set, get, ...args) =>
   },
   verifyCredential: async jwt => {
     const { setIsPending } = get()
-    setIsPending(true, "Verifying credential...")
+    setIsPending(true, "Verifying credential...", true)
     try {
       const res = await apiFetch(`${CREDENTIAL_API_ENDPOINT}/verify`, {
         body: JSON.stringify({ jwt }),

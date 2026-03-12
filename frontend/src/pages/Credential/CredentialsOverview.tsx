@@ -11,7 +11,7 @@ import { useErrorStore } from "~/stores/state-handlers"
 import CredentialItems from "../../components/pages/Credential/CredentialItems"
 
 const CredentialsOverview = () => {
-  const { fetchCredentials, isPending, text: pendingMessage } = useCredentialStore()
+  const { disableSpinner, fetchCredentials, isPending, text: pendingMessage } = useCredentialStore()
   const { setError } = useErrorStore()
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const CredentialsOverview = () => {
           <BackButton />
           <LinkButton label="Create New Credential" variant="contained" color="primary" to={CredentialRoutes.NEW} />
         </Box>
-        {isPending && (
+        {isPending && !disableSpinner && (
           <Box display="flex" justifyContent="center" alignItems="center" my={2} gap={2}>
             <CircularProgress size={32} />
             {pendingMessage && <Typography color="text.secondary">{pendingMessage}</Typography>}
