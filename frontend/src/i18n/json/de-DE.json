@@ -1,6 +1,26 @@
 {
+  "buttons": {
+    "back": "Zurück",
+    "cancel": "Abbrechen",
+    "copied": "Kopiert",
+    "copyJson": "JSON kopieren",
+    "create": "Erstellen",
+    "close": "Schließen",
+    "delete": "Löschen",
+    "issue": "Berechtigung ausstellen",
+    "update": "Aktualisieren",
+    "verify": "Verifizieren",
+    "view": "Anzeigen"
+  },
   "common": {
-    "update": "{what} wird aktualisiert"
+    "invalidJson": "Ungültiges JSON-Format",
+    "issuer": "Aussteller",
+    "notVerified": "Nicht verifiziert",
+    "rawJson": "Raw JSON",
+    "subject": "Subjekt",
+    "type": "Typ",
+    "update": "{what} wird aktualisiert",
+    "verified": "Verifiziert"
   },
   "languages": {
     "de-DE": "Deutsch",
@@ -8,8 +28,51 @@
     "fr-FR": "Französisch"
   },
   "pages": {
+    "credential": {
+      "details": {
+        "notFound": "Keine Berechtigung gefunden.",
+        "title": "Berechtigungsdetails"
+      },
+      "dialogs": {
+        "createdMessage": "Die Berechtigung wurde erfolgreich erstellt. Was möchten Sie als Nächstes tun?",
+        "createdTitle": "Berechtigung erstellt",
+        "deleteMessage": "Möchten Sie diese Berechtigung wirklich löschen?",
+        "deleteTitle": "Berechtigung löschen",
+        "successCreateAnother": "Weitere erstellen",
+        "successGoToOverview": "Zur Übersicht",
+        "verifyInvalid": "Ungültig: {error}",
+        "verifyPending": "Verifizierung läuft...",
+        "verifyTitle": "Berechtigung verifizieren",
+        "verifyUnexpected": "Unerwarteter Zustand",
+        "verifyValid": "Berechtigung ist gültig"
+      },
+      "issuer": {
+        "claimsHelper": "Fügen Sie ein JSON-Objekt für die Claims ein oder geben Sie es ein",
+        "claimsPlaceholder": "Claims (JSON, z.B. {\"name\":\"Alice\"})",
+        "invalidJson": "Ungültiges JSON-Format",
+        "issueButton": "Berechtigung ausstellen",
+        "issuerHelper": "DID oder Name des Ausstellers (z.B. did:example:issuer123)",
+        "issuerPlaceholder": "DID oder Name des Ausstellers",
+        "issuing": "Wird ausgestellt...",
+        "subjectHelper": "DID oder Name des Subjekts (z.B. did:example:subject456)",
+        "subjectPlaceholder": "DID oder Name des Subjekts",
+        "title": "Neue Berechtigung ausstellen",
+        "typeHelper": "Typ der Berechtigung (z.B. VerifiableCredential)",
+        "typePlaceholder": "Berechtigungstyp"
+      },
+      "overview": {
+        "createButton": "Neue Berechtigung erstellen",
+        "noCredentials": "Noch keine Berechtigungen ausgestellt.",
+        "spinnerLabel": "Berechtigungen werden geladen...",
+        "title": "Ausgestellte Berechtigungen"
+      }
+    },
     "dashboard": {
-      "title": "Dashboard"
+      "createButton": "Neue Berechtigung erstellen",
+      "description": "Berechtigungen einfach verwalten und ausstellen.",
+      "title": "Dashboard",
+      "viewButton": "Alle Berechtigungen anzeigen",
+      "welcome": "Willkommen im Berechtigungs-Dashboard"
     },
     "logout": {
       "title": "Abmelden"

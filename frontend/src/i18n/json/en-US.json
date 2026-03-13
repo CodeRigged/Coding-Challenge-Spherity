@@ -1,6 +1,28 @@
 {
+  "buttons": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "copied": "Copied",
+    "copyJson": "Copy JSON",
+    "create": "Create",
+    "close": "Close",
+    "delete": "Delete",
+    "issue": "Issue Credential",
+    "update": "Update",
+    "verify": "Verify",
+    "view": "View"
+  },
   "common": {
-    "update": "{what} is being updated"
+    "claims": "Claims",
+    "claimsHelper": "Paste or type JSON object for claims",
+    "invalidJson": "Invalid JSON format",
+    "issuer": "Issuer",
+    "notVerified": "Not Verified",
+    "rawJson": "Raw JSON",
+    "subject": "Subject",
+    "type": "Type",
+    "update": "{what} is being updated",
+    "verified": "Verified"
   },
   "languages": {
     "de-DE": "German",
@@ -8,8 +30,51 @@
     "fr-FR": "French"
   },
   "pages": {
+    "credential": {
+      "details": {
+        "notFound": "No credential found.",
+        "title": "Credential Details"
+      },
+      "dialogs": {
+        "createdMessage": "The credential was successfully created. What would you like to do next?",
+        "createdTitle": "Credential Created",
+        "deleteMessage": "Are you sure you want to delete this credential?",
+        "deleteTitle": "Delete Credential",
+        "successCreateAnother": "Create Another",
+        "successGoToOverview": "Go to Overview",
+        "verifyInvalid": "Invalid: {error}",
+        "verifyPending": "Verifying...",
+        "verifyTitle": "Verify Credential",
+        "verifyUnexpected": "Unexpected state",
+        "verifyValid": "Credential is valid"
+      },
+      "issuer": {
+        "claimsHelper": "Paste or type JSON object for claims",
+        "claimsPlaceholder": "Claims (JSON, e.g. {\"name\":\"Alice\"})",
+        "invalidJson": "Invalid JSON format",
+        "issueButton": "Issue Credential",
+        "issuerHelper": "Issuer's DID or name (e.g. did:example:issuer123)",
+        "issuerPlaceholder": "Issuer DID or Name",
+        "issuing": "Issuing...",
+        "subjectHelper": "Subject's DID or name (e.g. did:example:subject456)",
+        "subjectPlaceholder": "Subject DID or Name",
+        "title": "Issue New Credential",
+        "typeHelper": "Type of credential (e.g. VerifiableCredential)",
+        "typePlaceholder": "Credential Type"
+      },
+      "overview": {
+        "createButton": "Create New Credential",
+        "noCredentials": "No credentials issued yet.",
+        "spinnerLabel": "Loading credentials...",
+        "title": "Issued Credentials"
+      }
+    },
     "dashboard": {
-      "title": "Dashboard"
+      "createButton": "Create New Credential",
+      "description": "Manage and issue credentials easily.",
+      "title": "Dashboard",
+      "viewButton": "View All Credentials",
+      "welcome": "Welcome to the Credential Dashboard"
     },
     "logout": {
       "title": "Logout"

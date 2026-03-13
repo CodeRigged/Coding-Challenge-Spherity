@@ -4,12 +4,14 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import { Box, Card, CardContent, CardHeader, CircularProgress, IconButton, Tooltip, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
+import { FormattedMessage, useIntl } from "react-intl"
 import { useParams } from "react-router-dom"
 
 import BackButton from "~/components/navigation/BackButton"
 import { useCredentialStore } from "~/stores/credential-store"
 
 const CredentialPage = () => {
+  const intl = useIntl()
   const { id } = useParams<{ id: string }>()
   const { findCredential, isPending } = useCredentialStore()
   const [credential, setCredential] = useState<Credential | null>(null)
@@ -37,7 +39,12 @@ const CredentialPage = () => {
 
   if (isPending) return <CircularProgress sx={{ display: "block", mt: 6, mx: "auto" }} />
   if (error) return <Typography color="error">{error}</Typography>
-  if (!credential) return <Typography>No credential found.</Typography>
+  if (!credential)
+    return (
+      <Typography>
+        <FormattedMessage id="pages.credential.details.notFound" />
+      </Typography>
+    )
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="70vh">
@@ -46,21 +53,25 @@ const CredentialPage = () => {
           avatar={<BackButton />}
           title={
             <Box display="flex" alignItems="center" gap={1}>
-              <Typography variant="h6">Credential Details</Typography>
+              <Typography variant="h6">
+                <FormattedMessage id="pages.credential.details.title" />
+              </Typography>
               {credential.verified ? (
-                <Tooltip title="Verified">
+                <Tooltip title={<FormattedMessage id="common.verified" />}>
                   <VerifiedIcon color="success" />
                 </Tooltip>
               ) : (
-                <Tooltip title="Not Verified">
+                <Tooltip title={<FormattedMessage id="common.notVerified" />}>
                   <VerifiedIcon color="warning" />
                 </Tooltip>
               )}
             </Box>
           }
           action={
-            <Tooltip title={copied ? "Copied!" : "Copy JSON"}>
-              <IconButton onClick={handleCopy} aria-label="Copy JSON">
+            <Tooltip
+              title={copied ? <FormattedMessage id="buttons.copied" /> : <FormattedMessage id="buttons.copyJson" />}
+            >
+              <IconButton onClick={handleCopy} aria-label={intl.formatMessage({ id: "buttons.copyJson" })}>
                 <ContentCopyIcon />
               </IconButton>
             </Tooltip>
@@ -68,16 +79,16 @@ const CredentialPage = () => {
         />
         <CardContent>
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            Type: {credential.type}
+            <FormattedMessage id="common.type" />: {credential.type}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Issuer: {credential.issuer}
+            <FormattedMessage id="common.issuer" />: {credential.issuer}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Subject: {credential.subject}
+            <FormattedMessage id="common.subject" />: {credential.subject}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary" mt={2} mb={1}>
-            Raw JSON
+            <FormattedMessage id="common.rawJson" />
           </Typography>
           <Box
             mb={2}

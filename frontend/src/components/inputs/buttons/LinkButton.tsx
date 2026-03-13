@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { LinkComponent } from "~/types/common"
 
 interface LinkButtonProps extends LinkComponent {
-  label: string
+  label: string | React.ReactNode
 }
 
 /**

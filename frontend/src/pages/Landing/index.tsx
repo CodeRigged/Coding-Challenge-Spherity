@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material"
-import { useIntl } from "react-intl"
+import { FormattedMessage, useIntl } from "react-intl"
 
 import LinkButton from "~/components/inputs/buttons/LinkButton"
 import PageLayout from "~/layouts/PageLayout"
@@ -20,21 +20,21 @@ const LandingPage = () => {
         minHeight="60vh"
       >
         <Typography variant="h4" gutterBottom>
-          Welcome to the Credential Dashboard
+          <FormattedMessage id="pages.dashboard.welcome" defaultMessage="Welcome to the Credential Dashboard" />
         </Typography>
         <Typography variant="body1" color="text.secondary" mb={4}>
-          Manage and issue credentials easily.
+          <FormattedMessage id="pages.dashboard.description" defaultMessage="Manage and issue credentials easily." />
         </Typography>
         <Stack direction={{ sm: "row", xs: "column" }} spacing={3}>
           <LinkButton
-            label="Create New Credential"
+            label={formatMessage({ defaultMessage: "Create New Credential", id: "pages.dashboard.createButton" })}
             variant="contained"
             color="primary"
             size="large"
             to={CredentialRoutes.NEW}
           />
           <LinkButton
-            label="View All Credentials"
+            label={formatMessage({ defaultMessage: "View All Credentials", id: "pages.dashboard.viewButton" })}
             variant="contained"
             color="primary"
             size="large"

@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material"
 import { useState } from "react"
+import { FormattedMessage, useIntl } from "react-intl"
 
 import BackButton from "~/components/navigation/BackButton"
 import { useCredentialStore } from "~/stores/credential-store"
@@ -37,6 +38,7 @@ const parseClaims = (input: string): Nullable<Record<string, unknown>> => {
 }
 
 const CredentialIssuerForm = () => {
+  const { formatMessage } = useIntl()
   const [form, setForm] = useState<IssueCredentialDto>(initialForm)
   const [claimsInput, setClaimsInput] = useState<string>("")
   const { addCredential, isPending } = useCredentialStore()
@@ -76,7 +78,7 @@ const CredentialIssuerForm = () => {
           avatar={<BackButton />}
           title={
             <Typography marginBottom={0} variant="h6" gutterBottom>
-              Issue New Credential
+              <FormattedMessage id="pages.credential.issuer.title" defaultMessage="Issue New Credential" />
             </Typography>
           }
         />
@@ -87,36 +89,57 @@ const CredentialIssuerForm = () => {
                 name="type"
                 value={form.type}
                 onChange={handleChange}
-                placeholder="Credential Type"
-                label="Type"
+                placeholder={formatMessage({
+                  defaultMessage: "Credential Type",
+                  id: "pages.credential.issuer.typePlaceholder",
+                })}
+                label={formatMessage({ defaultMessage: "Type", id: "common.type" })}
                 size="small"
                 required
               />
-              <FormHelperText>Type of credential (e.g. VerifiableCredential)</FormHelperText>
+              <FormHelperText>
+                <FormattedMessage
+                  id="pages.credential.issuer.typeHelper"
+                  defaultMessage="Type of credential (e.g. VerifiableCredential)"
+                />
+              </FormHelperText>
             </FormControl>
             <FormControl disabled={isPending} required variant="outlined" size="small">
               <TextField
                 name="issuer"
                 value={form.issuer}
                 onChange={handleChange}
-                placeholder="Issuer DID or Name"
-                label="Issuer"
+                placeholder={formatMessage({ defaultMessage: "Issuer DID or Name", id: "common.issuer" })}
+                label={formatMessage({ defaultMessage: "Issuer", id: "common.issuer" })}
                 size="small"
                 required
               />
-              <FormHelperText>Issuer's DID or name (e.g. did:example:issuer123)</FormHelperText>
+              <FormHelperText>
+                <FormattedMessage
+                  id="pages.credential.issuer.issuerHelper"
+                  defaultMessage="Issuer's DID or name (e.g. did:example:issuer123)"
+                />
+              </FormHelperText>
             </FormControl>
             <FormControl disabled={isPending} required variant="outlined" size="small">
               <TextField
                 name="subject"
                 value={form.subject}
                 onChange={handleChange}
-                placeholder="Subject DID or Name"
-                label="Subject"
+                placeholder={formatMessage({
+                  defaultMessage: "Subject DID or Name",
+                  id: "pages.credential.issuer.subjectPlaceholder",
+                })}
+                label={formatMessage({ defaultMessage: "Subject", id: "common.subject" })}
                 size="small"
                 required
               />
-              <FormHelperText>Subject's DID or name (e.g. did:example:subject456)</FormHelperText>
+              <FormHelperText>
+                <FormattedMessage
+                  id="pages.credential.issuer.subjectHelper"
+                  defaultMessage="Subject's DID or name (e.g. did:example:subject456)"
+                />
+              </FormHelperText>
             </FormControl>
             <FormControl
               disabled={isPending}
@@ -129,8 +152,11 @@ const CredentialIssuerForm = () => {
                 name="claims"
                 value={claimsInput}
                 onChange={handleClaimsChange}
-                placeholder='Claims (JSON, e.g. {"name":"Alice"})'
-                label="Claims"
+                placeholder={formatMessage({
+                  defaultMessage: 'Claims (JSON, e.g. {"name":"Alice"})',
+                  id: "pages.credential.issuer.claimsPlaceholder",
+                })}
+                label={formatMessage({ defaultMessage: "Claims", id: "common.claims" })}
                 size="small"
                 required
                 multiline
@@ -138,8 +164,11 @@ const CredentialIssuerForm = () => {
               />
               <FormHelperText>
                 {!!claimsInput && !parseClaims(claimsInput)
-                  ? "Invalid JSON format"
-                  : "Paste or type JSON object for claims"}
+                  ? formatMessage({ defaultMessage: "Invalid JSON format", id: "pages.credential.issuer.invalidJson" })
+                  : formatMessage({
+                      defaultMessage: "Paste or type JSON object for claims",
+                      id: "pages.credential.issuer.claimsHelper",
+                    })}
               </FormHelperText>
             </FormControl>
             <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2} mt={1}>
@@ -150,7 +179,9 @@ const CredentialIssuerForm = () => {
                 disabled={isPending || !isFormValid}
                 startIcon={isPending ? <CircularProgress size={18} color="inherit" /> : null}
               >
-                {isPending ? "Issuing..." : "Issue Credential"}
+                {isPending
+                  ? formatMessage({ defaultMessage: "Issuing...", id: "pages.credential.issuer.issuing" })
+                  : formatMessage({ defaultMessage: "Issue Credential", id: "pages.credential.issuer.issueButton" })}
               </Button>
             </Box>
           </Box>

@@ -1,5 +1,6 @@
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { Box, Stack, Typography } from "@mui/material"
+import { FormattedMessage } from "react-intl"
 
 import { useCredentialStore } from "~/stores/credential-store"
 
@@ -16,7 +17,12 @@ const CredentialItems = () => {
       {credentials.length === 0 && !isPending && (
         <Box className="credential-list__empty">
           <InsertDriveFileOutlinedIcon className="credential-list__empty-icon" />
-          <Typography className="credential-list__empty-text">No credentials issued yet.</Typography>
+          <Typography className="credential-list__empty-text">
+            <FormattedMessage
+              id="pages.credential.overview.noCredentials"
+              defaultMessage="No credentials issued yet."
+            />
+          </Typography>
         </Box>
       )}
     </Stack>

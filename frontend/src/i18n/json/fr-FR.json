@@ -1,6 +1,28 @@
 {
+  "buttons": {
+    "back": "Retour",
+    "cancel": "Annuler",
+    "copied": "Copié",
+    "copyJson": "Copier le JSON",
+    "create": "Créer",
+    "close": "Fermer",
+    "delete": "Supprimer",
+    "issue": "Émettre l'identifiant",
+    "update": "Mettre à jour",
+    "verify": "Vérifier",
+    "view": "Voir"
+  },
   "common": {
-    "update": "{what} se met à jour"
+    "claims": "Droits",
+    "claimsHelper": "Collez ou saisissez un objet JSON pour les droits",
+    "invalidJson": "Format JSON invalide",
+    "issuer": "Émetteur",
+    "notVerified": "Non vérifié",
+    "rawJson": "Raw JSON",
+    "subject": "Sujet",
+    "type": "Type",
+    "update": "{what} se met à jour",
+    "verified": "Vérifié"
   },
   "languages": {
     "de-DE": "Allemand",
@@ -8,8 +30,51 @@
     "fr-FR": "Français"
   },
   "pages": {
+    "credential": {
+      "details": {
+        "notFound": "Aucun identifiant trouvé.",
+        "title": "Détails de l'identifiant"
+      },
+      "dialogs": {
+        "createdMessage": "L'identifiant a été créé avec succès. Que souhaitez-vous faire ensuite ?",
+        "createdTitle": "Identifiant créé",
+        "deleteMessage": "Voulez-vous vraiment supprimer cet identifiant ?",
+        "deleteTitle": "Supprimer l'identifiant",
+        "successCreateAnother": "Créer un autre",
+        "successGoToOverview": "Aller à la vue d'ensemble",
+        "verifyInvalid": "Invalide : {error}",
+        "verifyPending": "Vérification en cours...",
+        "verifyTitle": "Vérifier l'identifiant",
+        "verifyUnexpected": "État inattendu",
+        "verifyValid": "L'identifiant est valide"
+      },
+      "issuer": {
+        "claimsHelper": "Collez ou saisissez un objet JSON pour les droits",
+        "claimsPlaceholder": "Droits (JSON, par ex. {\"name\":\"Alice\"})",
+        "invalidJson": "Format JSON invalide",
+        "issueButton": "Émettre l'identifiant",
+        "issuerHelper": "DID ou nom de l'émetteur (par ex. did:example:issuer123)",
+        "issuerPlaceholder": "DID ou nom de l'émetteur",
+        "issuing": "Émission en cours...",
+        "subjectHelper": "DID ou nom du sujet (par ex. did:example:subject456)",
+        "subjectPlaceholder": "DID ou nom du sujet",
+        "title": "Émettre un nouvel identifiant",
+        "typeHelper": "Type d'identifiant (par ex. VerifiableCredential)",
+        "typePlaceholder": "Type d'identifiant"
+      },
+      "overview": {
+        "createButton": "Créer un nouvel identifiant",
+        "noCredentials": "Aucun identifiant émis pour le moment.",
+        "spinnerLabel": "Chargement des identifiants...",
+        "title": "Identifiants émis"
+      }
+    },
     "dashboard": {
-      "title": "Dashboard"
+      "createButton": "Créer un nouvel identifiant",
+      "description": "Gérez et émettez des identifiants facilement.",
+      "title": "Dashboard",
+      "viewButton": "Voir tous les identifiants",
+      "welcome": "Bienvenue sur le tableau de bord des identifiants"
     },
     "logout": {
       "title": "Se déconnecter"
