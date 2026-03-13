@@ -13,6 +13,7 @@ import VerifyDialog from "../dialogs/VerifyDialog"
  */
 interface VerifyButtonProps {
   credential: Credential
+  setVerified: React.Dispatch<React.SetStateAction<Credential["verified"]>>
   verified: boolean
 }
 
@@ -23,8 +24,9 @@ interface VerifyButtonProps {
  *
  * @param credential - The credential to verify
  * @param verified - Whether the credential is already verified
+ * @param setVerified - Function to update the verified state of the credential
  */
-const VerifyButton = React.memo<VerifyButtonProps>(({ credential, verified }) => {
+const VerifyButton: React.FC<VerifyButtonProps> = ({ credential, setVerified, verified }) => {
   const intl = useIntl()
   const { isPending, verifyCredential } = useCredentialStore()
   const [showVerify, setShowVerify] = useState<boolean>(false)
@@ -34,6 +36,7 @@ const VerifyButton = React.memo<VerifyButtonProps>(({ credential, verified }) =>
     setShowVerify(true)
     const result = await verifyCredential(credential.jwt)
     setVerifyResult(result)
+    setVerified(result.valid)
   }
 
   return (
@@ -55,6 +58,6 @@ const VerifyButton = React.memo<VerifyButtonProps>(({ credential, verified }) =>
       />
     </>
   )
-})
+}
 
 export default VerifyButton

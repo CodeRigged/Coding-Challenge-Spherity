@@ -28,10 +28,14 @@ const initialForm: IssueCredentialDto = {
   type: "",
 }
 
-// Helper to validate JSON claims
+// Helper to validate JSON claims (must be object)
 const parseClaims = (input: string): Nullable<Record<string, unknown>> => {
   try {
-    return JSON.parse(input)
+    const parsed = JSON.parse(input)
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      return parsed
+    }
+    return null
   } catch {
     return null
   }
@@ -170,7 +174,10 @@ const CredentialIssuerForm = () => {
               />
               <FormHelperText>
                 {!!claimsInput && !parseClaims(claimsInput)
-                  ? formatMessage({ defaultMessage: "Invalid JSON format", id: "pages.credential.issuer.invalidJson" })
+                  ? formatMessage({
+                      defaultMessage: "Invalid JSON format or not an object",
+                      id: "pages.credential.issuer.invalidJson",
+                    })
                   : formatMessage({
                       defaultMessage: "Paste or type JSON object for claims",
                       id: "pages.credential.issuer.claimsHelper",

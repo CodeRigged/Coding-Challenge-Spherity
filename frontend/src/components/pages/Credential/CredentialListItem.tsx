@@ -2,7 +2,7 @@ import type { Credential } from "shared/types"
 
 import VerifiedIcon from "@mui/icons-material/Verified"
 import { Box, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
-import React from "react"
+import { useState } from "react"
 import { FormattedMessage, useIntl } from "react-intl"
 
 import DeleteButton from "./buttons/DeleteButton"
@@ -20,9 +20,9 @@ interface CredentialListItemProps {
  *
  * @param credential - The credential to display
  */
-const CredentialListItem = React.memo<CredentialListItemProps>(({ credential }) => {
+const CredentialListItem = ({ credential }: CredentialListItemProps) => {
   const intl = useIntl()
-  const isValid = credential.verified
+  const [isValid, setIsValid] = useState<Credential["verified"]>(credential.verified)
 
   return (
     <Card className="credential-list__item" variant="outlined">
@@ -58,12 +58,12 @@ const CredentialListItem = React.memo<CredentialListItemProps>(({ credential }) 
         </Typography>
       </CardContent>
       <CardActions className="credential-list__item-actions">
-        <VerifyButton credential={credential} verified={isValid} />
+        <VerifyButton credential={credential} verified={isValid} setVerified={setIsValid} />
         <ViewButton credential={credential} />
         <DeleteButton credential={credential} />
       </CardActions>
     </Card>
   )
-})
+}
 
 export default CredentialListItem
