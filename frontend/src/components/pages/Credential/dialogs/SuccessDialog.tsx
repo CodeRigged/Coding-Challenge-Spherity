@@ -9,7 +9,22 @@ interface SuccessDialogProps {
   open: boolean
   onClose: () => void
 }
+/**
+ * Props for SuccessDialog component.
+ */
+interface SuccessDialogProps {
+  open: boolean
+  onClose: () => void
+}
 
+/**
+ * SuccessDialog component for credential creation success.
+ *
+ * Renders a dialog to inform the user that a credential was created successfully.
+ *
+ * @param open - Whether the dialog is open
+ * @param onClose - Callback to close the dialog
+ */
 const SuccessDialog: React.FC<SuccessDialogProps> = ({ onClose, open }) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>

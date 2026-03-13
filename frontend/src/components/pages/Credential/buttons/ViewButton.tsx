@@ -9,7 +9,20 @@ import { useCredentialStore } from "~/stores/credential-store"
 interface ViewButtonProps {
   credential: Credential
 }
+/**
+ * Props for ViewButton component.
+ */
+interface ViewButtonProps {
+  credential: Credential
+}
 
+/**
+ * ViewButton component for viewing a credential.
+ *
+ * Renders a button that navigates to the credential details view.
+ *
+ * @param credential - The credential to view
+ */
 const ViewButton = ({ credential }: ViewButtonProps) => {
   const intl = useIntl()
   const { isPending } = useCredentialStore()

@@ -8,15 +8,26 @@ import { useCredentialStore } from "~/stores/credential-store"
 
 import VerifyDialog from "../dialogs/VerifyDialog"
 
+/**
+ * Props for VerifyButton component.
+ */
 interface VerifyButtonProps {
   credential: Credential
   verified: boolean
 }
 
+/**
+ * VerifyButton component for verifying a credential.
+ *
+ * Renders a button that triggers a verification action for the given credential.
+ *
+ * @param credential - The credential to verify
+ * @param verified - Whether the credential is already verified
+ */
 const VerifyButton = React.memo<VerifyButtonProps>(({ credential, verified }) => {
   const intl = useIntl()
   const { isPending, verifyCredential } = useCredentialStore()
-  const [showVerify, setShowVerify] = useState(false)
+  const [showVerify, setShowVerify] = useState<boolean>(false)
   const [verifyResult, setVerifyResult] = useState<Nullable<VerifyCredentialResult>>(null)
 
   const handleVerify = async () => {

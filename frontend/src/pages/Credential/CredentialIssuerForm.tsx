@@ -37,13 +37,19 @@ const parseClaims = (input: string): Nullable<Record<string, unknown>> => {
   }
 }
 
+/**
+ * CredentialIssuerForm component for issuing new credentials.
+ *
+ * Provides a form for entering credential details and claims, handles validation and submission.
+ * Shows success dialog on completion.
+ */
 const CredentialIssuerForm = () => {
   const { formatMessage } = useIntl()
   const [form, setForm] = useState<IssueCredentialDto>(initialForm)
   const [claimsInput, setClaimsInput] = useState<string>("")
   const { addCredential, isPending } = useCredentialStore()
   const { setError } = useErrorStore()
-  const [showSuccess, setShowSuccess] = useState(false)
+  const [showSuccess, setShowSuccess] = useState<boolean>(false)
 
   const isFormValid = Boolean(form.type && form.issuer && form.subject && claimsInput && parseClaims(claimsInput))
 

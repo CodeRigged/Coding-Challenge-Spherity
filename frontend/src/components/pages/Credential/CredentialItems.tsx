@@ -6,6 +6,12 @@ import { useCredentialStore } from "~/stores/credential-store"
 
 import CredentialListItem from "./CredentialListItem"
 
+/**
+ * CredentialItems component for displaying a list of credentials.
+ *
+ * Renders a stack of CredentialListItem components for each credential.
+ * Shows an empty state if no credentials are present.
+ */
 const CredentialItems = () => {
   const { credentials, isPending } = useCredentialStore()
 

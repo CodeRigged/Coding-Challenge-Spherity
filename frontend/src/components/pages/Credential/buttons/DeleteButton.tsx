@@ -12,12 +12,25 @@ import DeleteConfirmDialog from "../dialogs/DeleteConfirmDialog"
 interface DeleteButtonProps {
   credential: Credential
 }
+/**
+ * Props for DeleteButton component.
+ */
+interface DeleteButtonProps {
+  credential: Credential
+}
 
+/**
+ * DeleteButton component for deleting a credential.
+ *
+ * Renders a button that triggers a delete action for the given credential.
+ *
+ * @param credential - The credential to delete
+ */
 const DeleteButton = ({ credential }: DeleteButtonProps) => {
   const intl = useIntl()
   const { deleteCredential, isPending } = useCredentialStore()
   const { setError } = useErrorStore()
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false)
 
   const handleDelete = () => {
     setShowDeleteConfirm(true)

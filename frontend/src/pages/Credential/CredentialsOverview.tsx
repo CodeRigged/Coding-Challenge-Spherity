@@ -11,6 +11,12 @@ import { useErrorStore } from "~/stores/state-handlers"
 
 import CredentialItems from "../../components/pages/Credential/CredentialItems"
 
+/**
+ * CredentialsOverview component for displaying a list of issued credentials.
+ *
+ * Fetches and displays all credentials, provides navigation and creation actions.
+ * Handles loading and error states.
+ */
 const CredentialsOverview = () => {
   const { disableSpinner, fetchCredentials, isPending, text: pendingMessage } = useCredentialStore()
   const { setError } = useErrorStore()

@@ -7,7 +7,26 @@ interface VerifyDialogProps {
   verifyResult: Nullable<VerifyCredentialResult>
   onClose: () => void
 }
+/**
+ * Props for VerifyDialog component.
+ */
+interface VerifyDialogProps {
+  isPending: boolean
+  open: boolean
+  verifyResult: Nullable<VerifyCredentialResult>
+  onClose: () => void
+}
 
+/**
+ * VerifyDialog component for credential verification result.
+ *
+ * Renders a dialog to show the result of credential verification.
+ *
+ * @param isPending - Whether a verification operation is pending
+ * @param open - Whether the dialog is open
+ * @param verifyResult - Result of the verification
+ * @param onClose - Callback to close the dialog
+ */
 const VerifyDialog = ({ isPending, onClose, open, verifyResult }: VerifyDialogProps) => (
   <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
     <DialogTitle>

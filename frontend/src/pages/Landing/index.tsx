@@ -6,6 +6,16 @@ import PageLayout from "~/layouts/PageLayout"
 
 import { CredentialRoutes } from "../../router/routes"
 
+/**
+ * LandingPage component
+ *
+ * Displays the dashboard landing page with a welcome message and navigation buttons.
+ * Users can navigate to create a new credential or view all credentials using the provided buttons.
+ * Uses react-intl for translations and Material UI for layout.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered landing page.
+ */
 const LandingPage = () => {
   const { formatMessage } = useIntl()
 

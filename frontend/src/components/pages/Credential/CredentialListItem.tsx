@@ -13,6 +13,13 @@ interface CredentialListItemProps {
   credential: Credential
 }
 
+/**
+ * CredentialListItem component for displaying a single credential.
+ *
+ * Renders a card with credential details and action buttons.
+ *
+ * @param credential - The credential to display
+ */
 const CredentialListItem = React.memo<CredentialListItemProps>(({ credential }) => {
   const intl = useIntl()
   const isValid = credential.verified

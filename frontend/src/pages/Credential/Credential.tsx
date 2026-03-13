@@ -10,13 +10,19 @@ import { useParams } from "react-router-dom"
 import BackButton from "~/components/navigation/BackButton"
 import { useCredentialStore } from "~/stores/credential-store"
 
+/**
+ * CredentialPage component for displaying a single credential's details.
+ *
+ * Fetches and displays credential details, including verification status and raw JSON.
+ * Handles copy-to-clipboard and loading/error states.
+ */
 const CredentialPage = () => {
   const intl = useIntl()
   const { id } = useParams<{ id: string }>()
   const { findCredential, isPending } = useCredentialStore()
   const [credential, setCredential] = useState<Credential | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState<boolean>(false)
 
   useEffect(() => {
     if (id) {
