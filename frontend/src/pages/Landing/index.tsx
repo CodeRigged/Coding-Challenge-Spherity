@@ -11,14 +11,21 @@ const LandingPage = () => {
 
   return (
     <PageLayout documentTitle={formatMessage({ defaultMessage: "Dashboard", id: "pages.dashboard.title" })}>
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="60vh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        textAlign="center"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="60vh"
+      >
         <Typography variant="h4" gutterBottom>
           Welcome to the Credential Dashboard
         </Typography>
         <Typography variant="body1" color="text.secondary" mb={4}>
           Manage and issue credentials easily.
         </Typography>
-        <Stack direction={{ sm: "row", xs: "row" }} spacing={3}>
+        <Stack direction={{ sm: "row", xs: "column" }} spacing={3}>
           <LinkButton
             label="Create New Credential"
             variant="contained"
